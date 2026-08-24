@@ -61,4 +61,4 @@ RUN mkdir -p \
 # Render provides PORT
 EXPOSE 8080
 
-CMD sh -c "php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
+CMD sh -c 'echo "=== STARTING BOUTIQUE PARIS ==="; echo "PORT=$PORT"; echo "DB_CONNECTION=$DB_CONNECTION"; echo "=== PHP VERSION ==="; php -v; echo "=== ARTISAN ==="; php artisan --version; echo "=== CONFIG CLEAR ==="; php artisan config:clear; echo "=== ROUTE CLEAR ==="; php artisan route:clear; echo "=== VIEW CLEAR ==="; php artisan view:clear; echo "=== MIGRATION ==="; php artisan migrate --force; echo "=== START SERVER ==="; php artisan serve --host=0.0.0.0 --port=${PORT:-10000}'artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
