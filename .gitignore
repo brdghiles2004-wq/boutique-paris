@@ -23,3 +23,14 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /storage/keys/*.pem
+# Laravel cache
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+
+# Keep Laravel storage directories
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/framework/testing/.gitignore
