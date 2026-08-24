@@ -29,14 +29,22 @@ WORKDIR /var/www/html
 # Copy project
 COPY . .
 
-# Install PHP dependencies
+# Create temporary SQLite database
+# This prevents Laravel from failing during composer install
+RUN mkdir -p database \
+    && touch database/database.sqlite
+
+# Install PHP dependencies without executing Laravel scripts
 RUN composer install \
     --no-dev \
     --optimize-autoloader \
-    --no-interaction
+    --no-interaction \
+    --no-scripts
 
-# Install frontend dependencies and build Vite
+# Install frontend dependencies
 RUN npm install
+
+# Build Vite
 RUN npm run build
 
 # Laravel permissions
@@ -48,7 +56,7 @@ RUN mkdir -p \
     bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Railway provides PORT
+# Render provides PORT
 EXPOSE 8080
 
 CMD sh -c "php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
